@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="account")
-@Data
+@lombok.Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Account {

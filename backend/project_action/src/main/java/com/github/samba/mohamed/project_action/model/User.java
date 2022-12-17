@@ -8,7 +8,7 @@ import lombok.*;
         @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
 })
-@Data
+@lombok.Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {

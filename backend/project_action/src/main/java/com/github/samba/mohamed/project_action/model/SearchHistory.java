@@ -15,7 +15,10 @@ public class SearchHistory {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "searchhistory_id_sequence")
     @Column(name = "id", nullable = false)
     private Long id;
-
+    @Column(name = "symbol")
+    private String symbol ;
+    @Column(name = "date_search")
+    private String date ;
 
 
 }
