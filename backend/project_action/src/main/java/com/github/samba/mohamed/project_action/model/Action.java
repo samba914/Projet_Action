@@ -16,9 +16,6 @@ public class Action {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "logo")
-    private String logo;
-
     @Column(name = "symbol")
     private String symbol;
 

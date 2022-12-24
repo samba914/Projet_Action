@@ -1,19 +1,25 @@
 package com.github.samba.mohamed.project_action.service;
 
+
 import com.github.samba.mohamed.project_action.payload.response.AlphavantageResponse;
 import com.github.samba.mohamed.project_action.payload.response.Stock;
+import com.github.samba.mohamed.project_action.payload.response.StockA;
+import com.univocity.parsers.common.processor.BeanListProcessor;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@NoArgsConstructor
+
 public class StockService {
-    private static final String URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=%s&apikey=1XDCVS7DM3C1XE20";  ;
     public static Stock getStockByDay(String symbol, String date){
         try {
             Date dateOne = new SimpleDateFormat("yyyy-MM-dd").parse(date);
@@ -29,10 +35,10 @@ public class StockService {
         }
         return  null ;
     }
-    public static HashMap<Date,Stock> getStockByRangeDate(String symbol, String date1, String date2){
+    public HashMap<Date,Stock> getStockByRangeDate(String symbol, String date1, String date2){
         try{
-            Date dateOne = new SimpleDateFormat("yyyy-MM-dd").parse(date1);
-            Date dateTwo = new SimpleDateFormat("yyyy-MM-dd").parse(date2);
+            Date dateOne = new SimpleDateFormat("dd/MM/yyyy").parse(date1);
+            Date dateTwo = new SimpleDateFormat("dd/MM/yyyy").parse(date2);
             HashMap<Date, Stock> stocks  = alphaAPI( symbol).getTimeSeries();
             Iterator it = stocks.entrySet().iterator();
             while (it.hasNext()) {
@@ -40,6 +46,10 @@ public class StockService {
 
                 if( (dateOne.after((Date) value.getKey()) || dateTwo.before((Date) value.getKey())) && ( (!DateUtils.isSameDay( (Date) value.getKey(),dateOne)) && (!DateUtils.isSameDay( (Date) value.getKey(),dateTwo))  )  ){
                     it.remove();
+                }else{
+                    Stock a = (Stock)value.getValue();
+                    a.setDate((Date) value.getKey());
+                    value.setValue(a);
                 }
             }
             return  stocks ;
@@ -59,17 +69,37 @@ public class StockService {
     }
 
     public static AlphavantageResponse alphaAPI(String symbol){
+        String URL  = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=%s&apikey=1XDCVS7DM3C1XE20";  ;
         String url = String.format(URL,symbol) ;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<AlphavantageResponse> response = restTemplate.getForEntity(url,AlphavantageResponse.class);
         return response.getBody();
     }
 
+    public  List<StockA> getAllStock(){
+        String u_url= "https://www.alphavantage.co/query?function=LISTING_STATUS&state=active&apikey=1XDCVS7DM3C1XE20";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(u_url,String.class);
+        String o =  response.getBody();
+        String input = "1,2\n3,4";
+
+        StringReader reader = new StringReader(o);
+
+            BeanListProcessor<StockA> rowProcessor = new BeanListProcessor<StockA>(StockA.class);
+            CsvParserSettings settings = new CsvParserSettings();
+            settings.setHeaderExtractionEnabled(true);
+            settings.setProcessor(rowProcessor);
+            CsvParser parser = new CsvParser(settings);
+            parser.parse(reader);
+        return rowProcessor.getBeans();
+    }
+
+    /*
     public static void main(String[] args) {
         String date1 = "2022-12-13" ;
         String date2 = "2022-12-17" ;
         //System.out.println(getStockByDay("IBM", "2022-12-16"));
         System.out.println(getStockByRangeDate("IBM",date1, date2).size());
-    }
+    }*/
 
 }
