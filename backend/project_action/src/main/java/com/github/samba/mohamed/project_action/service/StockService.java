@@ -17,6 +17,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class StockService {
@@ -29,6 +30,18 @@ public class StockService {
                     return stocks.get(d);
                 }
             }
+        }
+        catch (Exception e) {
+            System.err.println("error in getStockByDay");
+        }
+        return  null ;
+    }
+    public Stock getStockLastDay(String symbol){
+        try {
+            HashMap<Date, Stock> stocks = alphaAPI(symbol).getTimeSeries();
+            TreeMap<Date, Stock>a = new  TreeMap<Date, Stock>();
+            TreeMap<Date,Stock> s= stocks.entrySet() .stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> newValue, TreeMap::new));
+            return s.firstEntry().getValue();
         }
         catch (Exception e) {
             System.err.println("error in getStockByDay");
@@ -94,12 +107,12 @@ public class StockService {
         return rowProcessor.getBeans();
     }
 
-    /*
-    public static void main(String[] args) {
+
+   /* public static void main(String[] args) {
         String date1 = "2022-12-13" ;
         String date2 = "2022-12-17" ;
-        //System.out.println(getStockByDay("IBM", "2022-12-16"));
-        System.out.println(getStockByRangeDate("IBM",date1, date2).size());
+        System.out.println(getStockLastDay("IBM"));
+        //System.out.println(getStockByRangeDate("IBM",date1, date2).size());
     }*/
 
 }

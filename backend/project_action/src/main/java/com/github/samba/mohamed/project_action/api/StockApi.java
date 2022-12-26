@@ -31,6 +31,10 @@ public class StockApi {
         stockService.getStockByDay(symbol,date);
         return null;
     }
+    @GetMapping("/getStockLastDay")
+    public Stock getStockLastDay(@RequestParam String symbol){
+        return stockService.getStockLastDay(symbol);
+    }
     @GetMapping("/getStockByRange")
     public Collection<Stock> getStockByRange(@RequestParam String symbol, @RequestParam String stockName, @RequestParam String dateStart, @RequestParam String dateEnd){
         HashMap<Date,Stock> map =stockService.getStockByRangeDate(symbol,dateStart,dateEnd);

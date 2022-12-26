@@ -22,11 +22,14 @@ public class Action {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "purchasePrice")
-    private float purchasePrice;
-
     @Column(name = "quantity")
     private float quantity;
+
+    public Action(String symbol, String name, float quantity){
+        this.symbol=symbol;
+        this.name=name;
+        this.quantity=quantity;
+    }
 
 
 

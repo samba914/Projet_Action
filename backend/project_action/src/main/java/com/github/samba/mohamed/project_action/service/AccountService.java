@@ -2,11 +2,13 @@ package com.github.samba.mohamed.project_action.service;
 
 import com.github.samba.mohamed.project_action.model.Account;
 import com.github.samba.mohamed.project_action.model.Action;
+import com.github.samba.mohamed.project_action.payload.request.AddActionRequest;
 import com.github.samba.mohamed.project_action.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.AbstractCollection;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +28,29 @@ public class AccountService {
         Optional<Account> st = accountRepo.findByEmail(email);
         st.ifPresent(account-> account.setBalanceAmount(account.getBalanceAmount()+amount));
         return accountRepo.save(st.orElse(null));
+    }
+
+    public Account addToAction(String email, AddActionRequest request){
+        Optional<Account> st = accountRepo.findByEmail(email);
+        if(st.isPresent()){
+            Account a=st.get();
+            boolean isAnExistAction =false;
+            for(Action act : a.getActifs()){
+                if(act.getSymbol().equals(request.getStockSymbol())){
+                    isAnExistAction=true;
+                    act.setQuantity(act.getQuantity()+request.getStockQuantity());
+                    break;
+                }
+            }
+            if(!isAnExistAction){
+                Action newAction = new Action(request.getStockSymbol(), request.getStockName(),request.getStockQuantity());
+                a.addAction(newAction);
+            }
+            a.setBalanceAmount(a.getBalanceAmount() - request.getPurchasePrice());
+            return accountRepo.save(a);
+
+        }
+        return null;
     }
 
 

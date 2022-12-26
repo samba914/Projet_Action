@@ -45,5 +45,7 @@ public class Account {
         this.actifs = new ArrayList<>();
     }
 
-
+    public void addAction(Action a){
+        actifs.add(a);
+    }
 }
