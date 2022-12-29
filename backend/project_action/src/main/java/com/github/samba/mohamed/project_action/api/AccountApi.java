@@ -1,6 +1,7 @@
 package com.github.samba.mohamed.project_action.api;
 
 import com.github.samba.mohamed.project_action.model.Account;
+import com.github.samba.mohamed.project_action.model.Action;
 import com.github.samba.mohamed.project_action.payload.request.AddActionRequest;
 import com.github.samba.mohamed.project_action.payload.request.BalanceRequest;
 import com.github.samba.mohamed.project_action.payload.response.MessageResponse;
@@ -38,7 +39,15 @@ public class AccountApi {
     }
     @PutMapping("/addAction/{email}")
     public Account addAction(@PathVariable String email, @RequestBody AddActionRequest request){
-        return accountService.addToAction(email,request);
+        return accountService.addOrReduceAction(email,request,1);
+    }
+
+    @PutMapping("/reduceAction/{email}")
+    public Account reduceAction(@PathVariable String email, @RequestBody AddActionRequest request){
+        Account a =accountService.addOrReduceAction(email,request,-1);
+        List<Action> l = a.getActifs().stream().filter(action->action.getQuantity()!=0).toList();
+        a.setActifs(l);
+        return a;
     }
 
 

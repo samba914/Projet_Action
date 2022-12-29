@@ -29,8 +29,9 @@ public class AccountService {
         st.ifPresent(account-> account.setBalanceAmount(account.getBalanceAmount()+amount));
         return accountRepo.save(st.orElse(null));
     }
+    //reduceActionQuantity
 
-    public Account addToAction(String email, AddActionRequest request){
+    public Account addOrReduceAction(String email, AddActionRequest request,int typeOperation){ //TypeOperation ==-1 if sell , 1 if buy
         Optional<Account> st = accountRepo.findByEmail(email);
         if(st.isPresent()){
             Account a=st.get();
@@ -38,7 +39,7 @@ public class AccountService {
             for(Action act : a.getActifs()){
                 if(act.getSymbol().equals(request.getStockSymbol())){
                     isAnExistAction=true;
-                    act.setQuantity(act.getQuantity()+request.getStockQuantity());
+                    act.setQuantity(act.getQuantity()+ (typeOperation * request.getStockQuantity() ));
                     break;
                 }
             }
@@ -46,7 +47,7 @@ public class AccountService {
                 Action newAction = new Action(request.getStockSymbol(), request.getStockName(),request.getStockQuantity());
                 a.addAction(newAction);
             }
-            a.setBalanceAmount(a.getBalanceAmount() - request.getPurchasePrice());
+            a.setBalanceAmount(a.getBalanceAmount() - (typeOperation * request.getPurchasePrice() ));
             return accountRepo.save(a);
 
         }
