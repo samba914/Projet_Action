@@ -1,6 +1,7 @@
 package com.github.samba.mohamed.project_action.service;
 
 
+import com.github.samba.mohamed.project_action.model.SearchHistory;
 import com.github.samba.mohamed.project_action.payload.response.AlphavantageResponse;
 import com.github.samba.mohamed.project_action.payload.response.Stock;
 import com.github.samba.mohamed.project_action.payload.response.StockA;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
@@ -19,7 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@AllArgsConstructor
+@Service
 public class StockService {
     public static Stock getStockByDay(String symbol, String date){
         try {
@@ -106,6 +109,8 @@ public class StockService {
             parser.parse(reader);
         return rowProcessor.getBeans();
     }
+
+
 
 
    /* public static void main(String[] args) {
