@@ -1,5 +1,6 @@
 package com.github.samba.mohamed.project_action.payload.response;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Stock {
     @JsonProperty("5. adjusted close")
     String adjustedClose ;
     @JsonProperty( "6. volume")
+    @JsonAlias("5. volume")
     String volume ;
     @JsonProperty("7. dividend amount")
     String dividendAmount ;

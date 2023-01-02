@@ -3,6 +3,7 @@ package com.github.samba.mohamed.project_action.service;
 
 import com.github.samba.mohamed.project_action.model.SearchHistory;
 import com.github.samba.mohamed.project_action.payload.response.AlphavantageResponse;
+import com.github.samba.mohamed.project_action.payload.response.AlphavantageResponseIntraDay;
 import com.github.samba.mohamed.project_action.payload.response.Stock;
 import com.github.samba.mohamed.project_action.payload.response.StockA;
 import com.univocity.parsers.common.processor.BeanListProcessor;
@@ -110,14 +111,47 @@ public class StockService {
         return rowProcessor.getBeans();
     }
 
+    public static AlphavantageResponseIntraDay alphaAPIIntraDay(String symbol){
+        String URL  = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=%s&interval=60min&apikey=1XDCVS7DM3C1XE20";  ;
+        String url = String.format(URL,symbol) ;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<AlphavantageResponseIntraDay> response = restTemplate.getForEntity(url,AlphavantageResponseIntraDay.class);
+        return response.getBody();
+
+    }
+
+    public static List<Stock> getStockByIntraDay(String symbol, String date){
+        try {
+            Stock tmp ;
+            List<Stock> stockIntraDay = new ArrayList<>();
+            HashMap<String, Stock> stocks = alphaAPIIntraDay(symbol).getTimeSeries();
+            for(String s : stocks.keySet()){
+                if (s.substring(0,4).equals(date.substring(6,10)) && s.substring(5,7).equals(date.substring(3,5)) && s.substring(8,10).equals(date.substring(0,2))){
+                    tmp = stocks.get(s) ;
+                    tmp.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(s));
+                    stockIntraDay.add(tmp);
+                }
+            }
+            return stockIntraDay ;
+        }
+        catch (Exception e) {
+            System.err.println("error in getStockByDay : "+ e);
+        }
+        return  null ;
+    }
 
 
-
-   /* public static void main(String[] args) {
-        String date1 = "2022-12-13" ;
-        String date2 = "2022-12-17" ;
-        System.out.println(getStockLastDay("IBM"));
-        //System.out.println(getStockByRangeDate("IBM",date1, date2).size());
-    }*/
+//   public static void main(String[] args) {
+//        StockService z = new StockService();
+//        String date1 = "27/12/2022" ;
+//        String date2 = "30/12/2022" ;
+//       List<Stock> s = getStockByIntraDay("IBM",date1) ;
+//        System.out.println(s);
+//       System.out.println(s.size());
+//        for (Stock k : s){
+//            System.out.println(k.getDate());
+//        }
+//       //System.out.println(z.getStockByRangeDate("IBM",date1, date2).size());
+//    }
 
 }

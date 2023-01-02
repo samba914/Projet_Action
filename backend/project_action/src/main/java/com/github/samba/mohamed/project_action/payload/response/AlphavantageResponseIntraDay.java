@@ -13,13 +13,12 @@ import java.util.HashMap;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlphavantageResponse {
+public class AlphavantageResponseIntraDay {
     @JsonProperty("Meta Data")
     MetaData metaData ;
 
 
-    @JsonProperty("Time Series (Daily)")
     @JsonAlias("Time Series (60min)")
-    HashMap<Date, Stock> timeSeries ;
+    HashMap<String, Stock> timeSeries ;
 
 }
