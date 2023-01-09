@@ -98,8 +98,6 @@ public class StockService {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(u_url,String.class);
         String o =  response.getBody();
-        String input = "1,2\n3,4";
-
         StringReader reader = new StringReader(o);
 
             BeanListProcessor<StockA> rowProcessor = new BeanListProcessor<StockA>(StockA.class);
@@ -125,8 +123,9 @@ public class StockService {
             Stock tmp ;
             List<Stock> stockIntraDay = new ArrayList<>();
             HashMap<String, Stock> stocks = alphaAPIIntraDay(symbol).getTimeSeries();
+            Date dateObject = new SimpleDateFormat("dd/MM/yyyy").parse(date);
             for(String s : stocks.keySet()){
-                if (s.substring(0,4).equals(date.substring(6,10)) && s.substring(5,7).equals(date.substring(3,5)) && s.substring(8,10).equals(date.substring(0,2))){
+                if (dateObject.equals(new SimpleDateFormat("yyyy-MM-dd").parse(s.split(" ")[0]))){
                     tmp = stocks.get(s) ;
                     tmp.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(s));
                     stockIntraDay.add(tmp);
