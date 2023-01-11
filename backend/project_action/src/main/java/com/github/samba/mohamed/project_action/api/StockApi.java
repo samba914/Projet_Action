@@ -25,10 +25,7 @@ public class StockApi {
     private SearchHistoryService searchHistoryService;
     private SearchHistotyRepository sRepo;
 
-    @GetMapping("/all")
-    public String getTest(){
-        return  "test";
-    }
+
 
     @GetMapping("/getStockByDay")
     public Stock getStockByDay(@RequestParam String symbol,@RequestParam String date){

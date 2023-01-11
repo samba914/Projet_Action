@@ -5,6 +5,7 @@ import com.github.samba.mohamed.project_action.model.Action;
 import com.github.samba.mohamed.project_action.payload.request.AddActionRequest;
 import com.github.samba.mohamed.project_action.payload.request.BalanceRequest;
 import com.github.samba.mohamed.project_action.payload.response.MessageResponse;
+import com.github.samba.mohamed.project_action.repository.AccountRepository;
 import com.github.samba.mohamed.project_action.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -23,13 +24,6 @@ public class AccountApi {
     @GetMapping("/getAccount/{email}")
     public Account getAccount(@PathVariable String email){
         return accountService.getAccountByEmail(email);
-    }
-
-
-    @PostMapping("/postAccount/{email}/{surname}/{name}")
-    public Account postAccount(@PathVariable String email, @PathVariable String surname , @PathVariable String name){
-        Account s = new Account(email,surname,name);
-        return accountService.saveAccount(s);
     }
 
     @PutMapping("/addToAccountBalance/{email}")
