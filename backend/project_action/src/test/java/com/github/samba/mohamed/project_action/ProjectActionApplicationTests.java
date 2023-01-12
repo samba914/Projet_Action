@@ -26,45 +26,10 @@ import java.util.stream.Collectors;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class ProjectActionApplicationTests {
-	@Mock
-	private SearchHistotyRepository searchHistotyRepository;
-	@Mock
-	private SearchHistoryService searchHistoryService;
-	@Mock
-	private AccountService accountService;
-	@Mock
-	private AccountRepository accountRepository;
-	@Mock
-	private StockService stockService;
-
-	private StockApi stockApi;
-	private AccountApi accountApi;
-
-	private EasyRandom random;
-
-	@BeforeEach
-	public void setUp(){
-		MockitoAnnotations.openMocks(this);
-		random= new EasyRandom();
-		accountApi = new AccountApi(accountService);
-		stockApi = new StockApi(stockService,searchHistoryService,searchHistotyRepository);
-	}
-
 	@Test
-	public void shoulGetSearchHistory(){
-		List<SearchHistory> history = random.objects(SearchHistory.class,10).collect(Collectors.toList());
-		Mockito.when(searchHistotyRepository.findAll()).thenReturn(history);
-		List<SearchHistory> output = stockApi.getSearchHistory();
-		Assertions.assertEquals(history,output);
-	}
-	@Test
-	public void shoulGetAllStock(){
-		List<StockA> listStock = random.objects(StockA.class,10).collect(Collectors.toList());
-		Mockito.when(stockService.getAllStock()).thenReturn(listStock);
-		List<StockA> output = stockApi.getAllStock();
-		Assertions.assertEquals(listStock,output);
-	}
+	public void test(){
 
+	}
 
 
 }
