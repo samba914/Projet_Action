@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: samba914/Projet_Action/backend/project_action
+          repository: samba914/Projet_Action
 
       - name: Set up Java version
         uses: actions/setup-java@v1
