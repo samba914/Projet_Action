@@ -7,8 +7,6 @@ import com.github.samba.mohamed.project_action.repository.SearchHistotyRepositor
 import com.github.samba.mohamed.project_action.service.SearchHistoryService;
 import com.github.samba.mohamed.project_action.service.StockService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;

@@ -6,7 +6,6 @@ import com.github.samba.mohamed.project_action.payload.request.LoginRequest;
 import com.github.samba.mohamed.project_action.payload.request.SignupRequest;
 import com.github.samba.mohamed.project_action.payload.response.JwtResponse;
 import com.github.samba.mohamed.project_action.payload.response.MessageResponse;
-import com.github.samba.mohamed.project_action.repository.AccountRepository;
 import com.github.samba.mohamed.project_action.repository.UserRepository;
 import com.github.samba.mohamed.project_action.security.jwt.JwtUtils;
 import com.github.samba.mohamed.project_action.service.AccountService;
@@ -25,9 +24,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.AbstractMap;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:8081", maxAge = 3600, allowCredentials="true")
 @RestController
