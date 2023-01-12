@@ -14,9 +14,9 @@ spring:
       hibernate.jdbc.time_zone: UTC
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/projetaction
-    username: postgres
-    password: Douldoul1
+    url: jdbc:postgresql://ec2-54-73-68-39.eu-west-1.compute.amazonaws.com:5432/d3aktqld70q1mf
+    username: kszrldlbxymkqa
+    password: c76ed69b43a291a8f38ff0c21a1dc2184fe451746e5d398d6d2e2bb83f14fb22
 
   jwt:
     secret: projectActionSecretKey
