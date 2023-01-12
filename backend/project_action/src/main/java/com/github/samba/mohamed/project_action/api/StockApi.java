@@ -25,15 +25,16 @@ public class StockApi {
     private SearchHistoryService searchHistoryService;
     private SearchHistotyRepository sRepo;
 
-    @GetMapping("/all")
-    public String getTest(){
-        return  "test";
-    }
+
 
     @GetMapping("/getStockByDay")
     public Stock getStockByDay(@RequestParam String symbol,@RequestParam String date){
-        stockService.getStockByDay(symbol,date);
-        return null;
+        return stockService.getStockByDay(symbol,date);
+    }
+    @GetMapping("/getStockByDayWithHoursData")
+    public List<Stock> getStockByDayWithHoursData(@RequestParam String symbol,@RequestParam String stockName,@RequestParam String date){
+        searchHistoryService.saveSearchHistory(symbol,stockName);
+        return stockService.getStockByIntraDay(symbol,date);
     }
     @GetMapping("/getStockLastDay")
     public Stock getStockLastDay(@RequestParam String symbol){
