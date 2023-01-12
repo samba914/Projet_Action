@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Service
 public class StockService {
-    public static Stock getStockByDay(String symbol, String date){
+    public Stock getStockByDay(String symbol, String date){
         try {
             Date dateOne = new SimpleDateFormat("yyyy-MM-dd").parse(date);
             HashMap<Date, Stock> stocks = alphaAPI(symbol).getTimeSeries();
@@ -120,7 +120,7 @@ public class StockService {
 
     }
 
-    public static List<Stock> getStockByIntraDay(String symbol, String date){
+    public  List<Stock> getStockByIntraDay(String symbol, String date){
         try {
             Stock tmp ;
             List<Stock> stockIntraDay = new ArrayList<>();
