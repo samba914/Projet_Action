@@ -13,7 +13,7 @@ spring:
       hibernate.format_sql: true
       hibernate.jdbc.time_zone: UTC
   datasource:
-        driver-class-name: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://posgre.postgres.database.azure.com:5432/projectaction?sslmode=require
     username: samba
     password: Douldoul1
