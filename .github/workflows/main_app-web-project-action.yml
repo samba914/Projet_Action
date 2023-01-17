@@ -6,7 +6,7 @@ name: Build and deploy JAR app to Azure Web App - app-web-project-action
 on:
   push:
     branches:
-      - main
+      - Test_do_not_consider_for_notation
   workflow_dispatch:
 
 jobs:
