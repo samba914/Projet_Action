@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.util.AbstractMap;
 
-@CrossOrigin(origins = "https://front-action-safe.azurewebsites.net", maxAge = 3600, allowCredentials="true")
+@CrossOrigin(origins = "https://action-safe-front.azurewebsites.net", maxAge = 3600, allowCredentials="true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
