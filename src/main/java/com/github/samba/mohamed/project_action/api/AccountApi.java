@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8081",  allowCredentials="true")
+@CrossOrigin(origins = "*",  allowCredentials="true")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/account")
