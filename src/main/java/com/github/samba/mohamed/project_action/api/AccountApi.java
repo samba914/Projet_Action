@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://front-action-safe.azurewebsites.net/",  allowCredentials="true")
+@CrossOrigin(origins = "https://action-safe-front.azurewebsites.net",  allowCredentials="true")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/account")
